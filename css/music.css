@@ -1,0 +1,314 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: color 0.4s
+}
+
+html,
+body,
+.layout {
+    height: 100%;
+    overflow: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+ul {
+    list-style: none;
+}
+
+.background {
+    position: absolute;
+    z-index: -1;
+    left: -10px;
+    top: -10px;
+    bottom: -10px;
+    right: -10px;
+    background: url(http://cloud.hunger-valley.com/music/public_tuijian_spring.jpg-big) center center no-repeat;
+    background-size: cover;
+    filter: blur(4px);
+}
+
+.background::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+.aside>figure{
+    background-image: url(http://cloud.hunger-valley.com/music/public_tuijian_spring.jpg-middle);
+    height: 46vh;
+    width: 46vh;
+    background-size: cover;
+    background-position: center;
+}
+aside {
+    float: left;
+}
+
+@media (min-width: 700px) {
+    main,footer {
+        width: 600px;
+        margin:0 auto;
+        position: relative;
+    }
+}
+
+@media (min-width: 900px) {
+    main,footer {
+        width: 800px;
+    }
+}
+
+@media (min-width: 1000px) {
+    main,footer {
+        width: 900px;
+    }
+}
+
+@media (min-width: 1200px) {
+    main,footer {
+        width: 1100px;
+    }
+}
+
+main {
+    margin: 0 auto;
+    padding-top: 12vh;
+    height: calc(100% - 24vh);
+}
+
+main::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.actions {
+    display: flex;
+    margin-top: 4vh;
+}
+
+.actions>span {
+    flex: 1;
+    font-size: 5vh;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+}
+.actions>span.active{
+    color: #ff5722
+}
+.actions .iconfont:hover {
+    color: #fff;
+    cursor: pointer;
+}
+
+section {
+    margin-left: 56vh;
+    color: white;
+    position: relative;
+}
+
+section>.cat {
+    font-size: 2vh;
+    padding: .4em .8em;
+    background: #2e6eec;
+    border-radius: 1vh;
+}
+section>.search{
+    font-size: 2vh;
+    /* position: absolute;
+    right: 5vh; */
+    margin-left: 55%;
+    position: relative;
+}
+section>.search>input{
+    padding: 8px;
+    border-radius: 4px;
+    border:none;
+    padding-left: 30px;
+}
+section>.search>.icon-search{
+    color: #2e6eec;
+    padding: 7px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+}
+section>.search>.icon-menu{
+    color: #2e6eec;
+    position: absolute;
+    right:0;
+    padding:7px;
+    cursor: pointer;
+}
+section>.search>.searchResult::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+section>.search>.searchResult::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+section>.search>.searchResult::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+section>.search>.searchResult{
+    overflow-y: scroll;
+    display: none;
+    position: absolute;
+    font-size: 12px;
+    right: 0;
+    background: rgba(255, 255, 255, 0.3);
+    width:100%;
+    height: 38vh;
+}
+section>.search>.searchResult>.item{
+   border-bottom: 1px #ccc solid;
+   padding:10px;
+   cursor: pointer;
+   color: peachpuff
+}
+section>.search>.searchResult>.item:hover{
+    background: #ccc;
+ }
+section>h1 {
+    font-size: 6vh;
+    margin-top: 2vh;
+}
+
+section>.detail {
+    display: flex;
+    font-size: 3vh;
+    margin-top: 12vh;
+}
+
+section>.detail span {
+    flex: 1;
+    cursor:default
+}
+/* .detail .lyrics  span{
+    
+} */
+.bomText{
+    opacity: 0;
+    display: inline-block;
+}
+section>.bar {
+    margin-top: 10vh;
+    display: flex;
+    align-items: center;
+    
+}
+
+section>.bar>.totalBar {
+    cursor: pointer;
+    flex: 1;
+    position: relative;
+    flex: 1;
+    height: .8vh;
+    border-radius: .2vh;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+section>.bar .currentBar {
+    position: absolute;
+    height: .8vh;
+    width: 0%;
+    transition: width .4s;
+    background-color: #fff;
+    border-radius: .2vh;
+}
+
+section .author {
+    font-size: 2vh;
+    margin-top: 2vh;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+section .lyrics {
+    font-size: 3vh;
+    margin-top: 3vh;
+    color: rgba(255, 255, 255, 1);
+}
+
+footer .iconfont {
+    position: absolute;
+    top: 7vh;
+    font-size: 6vh;
+    color: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    transition: all .4s;
+    cursor: pointer;
+    transition: all 0.4s
+}
+footer .icon-Left{
+    left: -8vh;
+}
+footer .icon-right{
+    right: -8vh;
+}
+footer:hover .iconfont{
+    opacity: 1;
+}
+footer .box {
+    position: relative;
+    overflow: hidden;
+    height: 24vh;
+}
+
+footer .box ul {
+    position: absolute;
+    left: 0;
+}
+
+footer .box ul::after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+footer .box ul>li {
+    float: left;
+    margin-top: 1vh;
+    margin: 2vh 2vh 0 2vh;
+    width: 20vh;
+    height: 20vh;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.4s
+}
+
+footer .cover {
+    height: 16vh;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+
+.footer h3 {
+    font-size: 2vh;
+    color: rgba(255, 255, 255, 0.6);
+}
+.footer ul li:hover{
+    box-shadow: 0 0 0.5vh 0.5vh rgba(204,252,98,0.4);
+}

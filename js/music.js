@@ -1,0 +1,351 @@
+$.fn.boomText = function (type) {
+    type = type || 'rollIn'
+    this.html(function () {
+        var arr = $(this).text()
+            .split('').map(function (word) {
+                return '<span class="boomText"  style="display:inline-block;opacity: 0;">' + word + '</span>'
+            })
+        return arr.join('')
+    })
+
+    var index = 0
+    var $boomTexts = $(this).find('span')
+    var clock = setInterval(function () {
+        $boomTexts.eq(index).addClass('animated ' + type)
+        index++
+        if (index >= $boomTexts.length) {
+            clearInterval(clock)
+        }
+    }, 100)
+}
+var EventCenter = {
+    on: function (type, handler) {
+        $(document).on(type, handler)
+    },
+    fire: function (type, data) {
+        $(document).trigger(type, data)
+    }
+}
+
+
+let footer = {
+    init() {
+        this.$leftBtn = $(".icon-left");
+        this.$rightBtn = $(".icon-right");
+        this.$ul = $(".box").find("ul");
+        this.isEnd = false;
+        this.isStart = true;
+        this.isAnimate = false;
+        this.bind();
+        this.sendData("//jirenguapi.applinzi.com/fm/getChannels.php")
+    },
+    bind() {
+        this.$rightBtn.on("click", () => {
+            if (!this.isEnd) {
+                let itemWidth = $(".box ul li").outerWidth(true);
+                let rowCount = Math.floor($(".box").outerWidth() / itemWidth);
+                if (!this.isAnimate) {
+                    this.isAnimate = true;
+                    this.$ul.animate({
+                        left: "-=" + Math.floor(rowCount * itemWidth),
+                    }, 400, () => {
+                        this.isStart = false;
+                        this.isAnimate = false;
+                        if (parseFloat($(".box").width()) - parseFloat(this.$ul.css('left')) >= parseFloat(this.$ul.css('width'))) {
+                            this.isEnd = true;
+                        }
+                    });
+
+                }
+            }
+
+        })
+        this.$leftBtn.on("click", () => {
+            if (!this.isStart) {
+                let itemWidth = $(".box ul li").outerWidth(true);
+                let rowCount = Math.floor($(".box").outerWidth() / itemWidth);
+                if (!this.isAnimate) {
+                    this.isAnimate = true;
+                    this.$ul.animate({
+                        left: "+=" + Math.floor(rowCount * itemWidth),
+                    }, 400, () => {
+                        this.isEnd = false;
+                        this.isAnimate = false;
+                        if (parseFloat(this.$ul.css("left")) >= 0) {
+                            this.isStart = true;
+                        }
+                    });
+
+                }
+            }
+
+
+        })
+        $(".box ul").on("click", "li", function () {
+            EventCenter.fire("select_album", {
+                li: $(this),
+                channel_id: $(this).attr("data-channel-id"),
+                channel_name: $(this).attr("data-channel-name"),
+            })
+        })
+    },
+    setStyle() {
+        let template = `
+        <li  >
+        <div class="cover" ></div>
+        <h3></h3>
+    </li>
+        `;
+        this.data.forEach(
+            (li) => {
+                let $node = $(template);
+                let img = li.cover_small || "https://ws1.sinaimg.cn/large/b17846e9gy1fptphrxmt5j211c0qot9u.jpg";
+                $node.attr("data-channel-id", li.channel_id)
+                $node.attr("data-channel-name", li.name)
+                $node.find("div.cover").css("background-image", "url" + '(' + img + ')');
+                $node.find("h3").text(li.name)
+                $(".box ul").append($node)
+            }
+        )
+        let count = this.data.length;
+        let width = $(".box ul li").outerWidth(true);
+        $(".box ul").css({
+            width: count * width
+        })
+    },
+    sendData(url) {
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: "jsonp"
+        }).done(
+            (ret) => {
+                this.data = ret.channels;
+                this.setStyle()
+            }
+        )
+    },
+    
+
+}
+
+let Fm = {
+    init() {
+
+        this.music = new Audio();
+        this.music.autoplay = true;
+        this.fromSearch = false;
+        this.bind()
+    },
+    bind() {
+
+        let _this = this;
+        EventCenter.on("searchResult", (e, res) => {
+            $(".icon-play").removeClass("icon-play").addClass("icon-pause");
+            this.fromSearch =true
+            this.searchResult = res.data;
+            this.song = this.searchResult[0];
+            this.loadMusic();
+            this.setResult();
+        })
+        EventCenter.on("select_album", (e, channelObj) => {
+            this.fromSearch = false;
+            this.channel_id = channelObj.channel_id;
+            this.channel_name = channelObj.channel_name;
+            try {
+                this.loadMusic(function (url) {
+                    $(".icon-play").removeClass("icon-play").addClass("icon-pause");
+                });
+            } catch (e) {
+                console.log("加载失败")
+            }
+
+        });
+        $(".searchResult").on("click",".item",function(){
+            console.log()
+           let index = Array.prototype.indexOf.call(document.querySelector(".searchResult").children,this)
+           _this.song = _this.searchResult[index];
+           _this.loadMusic();
+           _this.setResult();
+        })
+        $(".btn-play").on("click", function () {
+            $(this).toggleClass("icon-play");
+            $(this).toggleClass("icon-pause");
+            if (_this.music.paused) {
+                _this.music.play()
+            } else {
+                _this.music.pause()
+            }
+        })
+        //  this.music.addEventListener("timeupdate",() =>{
+        //      let with 
+        //  })
+        $(".btn-next").on("click", () => {
+            this.loadMusic(() => {
+                $(".icon-play").removeClass("icon-play").addClass("icon-pause");
+            })
+        })
+        $(".btn-collect").on("click", function () {
+            $(this).toggleClass("active");
+        })
+ 
+
+        this.music.addEventListener("play", () => {
+            clearInterval(this.clock)
+            this.clock = setInterval(() => {
+                this.updateStatus()
+            }, 1000)
+        })
+        this.music.addEventListener("pause", () => {
+            clearInterval(this.clock)
+        })
+        this.music.addEventListener("ended", () => {
+            this.loadMusic(() => {
+                $(".icon-play").removeClass("icon-play").addClass("icon-pause");
+            })
+        })
+        $(".totalBar").on("click", (e) => {
+            this.updateProgerss(e.offsetX)
+        })
+    },
+    loadMusic(callback) {
+
+            if(this.fromSearch){
+                this.loadLyric()
+                this.setMusic()
+                return 
+            }
+            $.ajax({
+                url: '//jirenguapi.applinzi.com/fm/getSong.php',
+                method: "GET",
+                dataType: "jsonp",
+                data: {
+                    channel: this.channel_id
+                }
+            }).done((ret) => {
+                this.song = ret['song'][0];
+                callback()
+                this.setMusic()
+                this.loadLyric()
+            }).fail(() => {
+                clearInterval(clock)
+            })
+     
+
+    },
+    setMusic() {
+        let img = this.song.picture || "https://ws1.sinaimg.cn/large/b17846e9gy1fptphrxmt5j211c0qot9u.jpg";
+        this.music.src = this.song.url || ("http://music.163.com/song/media/outer/url?id="+this.song.id+".mp3");
+        $(".background").css("background-image", "url" + '(' + img + ')');
+        $("main section h1").text(this.song.title || this.song.name);
+        $(".author").text(this.song.artist);
+        $("main section>.cat").text(this.channel_name);
+        $(".aside>figure").css("background-image", "url" + '(' + img + ')')
+    },
+    loadLyric() {
+        let url ='';
+        if(this.fromSearch){
+            url = "http://localhost:4000/lyric";
+        }else{
+            url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
+        }
+        $.getJSON(url, {
+                sid: this.song.sid ,
+                id:this.song.id
+            })
+            .done((ret) => {
+                this.lyric = ret.lyric || ret.lrc.lyric  ;
+                this.lyricObj = {}
+                this.lyric.split("\n").forEach((line) => {
+                    let template = line.match(/\[\d{2}:\d{2}\.\d{2,4}\]/g)
+                    let times = line.match(/\d{2}:\d{2}/g);
+                    //  let str = line.replace(/\[.*\] /g,'');
+                    let str = line.replace(template, '');
+                    if (Array.isArray(times)) {
+                        times.forEach((time) => {
+                            this.lyricObj[time] = str;
+                        })
+                    }
+
+
+                })
+
+            }).fail( () =>{
+                console.log("fail")
+            })
+    },
+    updateStatus() {
+        let width = (this.music.currentTime / this.music.duration) * 100 + "%";
+        let minu = ('' + Math.floor(this.music.currentTime / 60)).length === 2 ? Math.floor(this.music.currentTime / 60) + '' : "0" + Math.floor(this.music.currentTime / 60)
+        let seconds = ('' + Math.floor(this.music.currentTime % 60)).length === 2 ? Math.floor(this.music.currentTime % 60) + '' : "0" + Math.floor(this.music.currentTime % 60)
+        $(".currentBar").css("width", width);
+        $(".time").text(minu + ":" + seconds);
+        let lyric = this.lyricObj[minu + ":" + seconds];
+        if (lyric) {
+            $(".lyrics p").text(lyric).boomText()
+        }
+        //     var timeStr = '0'+Math.floor(this.music.currentTime/60)+':'
+        //     + (Math.floor(this.music.currentTime)%60/100).toFixed(2).substr(2)
+        //   if(this.lyricObj && this.lyricObj[timeStr]){
+        //       console.log("ok")
+        // var styles = ['slideInUp','zoomIn','rollIn', 'rotateIn', 'flipInX','fadeIn', 'bounceIn','swing', 'pulse']
+        // var style = styles[Math.floor(Math.random()*styles.length)]
+        // $(".lyrics p").text(this.lyricObj[timeStr])
+        //  .boomText()
+
+        //   }
+    },
+    updateProgerss(x) {
+        let width = x / $(".totalBar").width() * 100 + "%";
+        this.music.currentTime = x / $(".totalBar").width() * this.music.duration;
+        $(".currentBar").css("width", width);
+
+    },
+    setResult(){
+           let template = `
+           <div class="item">
+               <p></p>
+           </div>
+           `
+           this.searchResult.forEach((res) =>{
+              let node = $(template) 
+              node.find("p").text(res.name+" "+res.artists[0].name)
+              $(".searchResult").append(node)
+           })
+
+    }
+}
+
+let search = {
+    init() {
+        this.bind()
+    },
+    bind() {
+        $(".search>.icon-search").on("click", () => {
+            this.keyWords = $(".search>input").val();
+            $(".search>.searchResult>.item").remove()
+            this.getData()
+        })
+        $(".search>.icon-menu").on("click", function(){
+            $(this).siblings(".searchResult").slideToggle("slow")
+        })
+       
+    },
+    getData() {
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:4000/search",
+            data: {
+                keywords: this.keyWords
+            }
+        }).done((ret) => {
+            EventCenter.fire("searchResult", {
+                data: ret.result.songs
+            })
+        })
+
+    }
+}
+Fm.init()
+footer.init()
+search.init()
