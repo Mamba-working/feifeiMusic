@@ -39,5 +39,5 @@ jquery , animate.css , 原生js
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
 
-![](https://ws1.sinaimg.cn/large/b17846e9gy1fpu0d9ru2xj228t1binpf.jpg)
-![](https://ws1.sinaimg.cn/large/b17846e9gy1fpu0htm3nzj228v1b1hdu.jpg)
+![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpu0ma15uoj22741bv7wi.jpg)
+![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpu0ln41gej22921ayhdu.jpg)
