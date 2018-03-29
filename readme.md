@@ -28,7 +28,7 @@ jquery , animate.css , 原生js
 这次更新未加入歌词拖动，加入了搜索功能,借用了Binaryify在github上的[网易云音乐api](https://github.com/Mamba-working/NeteaseCloudMusicApi)
 不过由于api的图片似乎出了问题,搜索的歌只使用了一张图片作为替代.由于两个api的歌词格式有区别,个别歌曲的歌词会显示时间
 ## 更新2
-增加了搜索结果的显示
+增加了搜索结果的显示，修复了歌词问题
 ## 使用说明
 ```
    1.git clone https://github.com/Mamba-working/feifei-Music.git
