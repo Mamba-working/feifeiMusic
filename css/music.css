@@ -185,10 +185,12 @@ section>.search>.searchResult>.item{
    border-bottom: 1px #ccc solid;
    padding:10px;
    cursor: pointer;
-   color: peachpuff
+   color: peachpuff;
+   transition: color 0.2s
 }
 section>.search>.searchResult>.item:hover{
     background: #ccc;
+    color:rgb(16, 185, 120)
  }
 section>h1 {
     font-size: 6vh;

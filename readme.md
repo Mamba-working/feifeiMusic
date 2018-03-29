@@ -24,13 +24,8 @@ jquery , animate.css , 原生js
 后续会继续完善功能，预下次更新加入歌词拖动
 
 
-<<<<<<< HEAD
-## 更新1
-这次更新未加入歌词拖动，加入了搜索功能,借用了Binaryify在github上的[网易云音乐api](https://github.com/Binaryify/NeteaseCloudMusicApi)
-=======
 ## 更新
 这次更新未加入歌词拖动，加入了搜索功能,借用了Binaryify在github上的[网易云音乐api](https://github.com/Mamba-working/NeteaseCloudMusicApi)
->>>>>>> 22eb40fbcdce8611c284bfce3982d783627756a1
 不过由于api的图片似乎出了问题,搜索的歌只使用了一张图片作为替代.由于两个api的歌词格式有区别,个别歌曲的歌词会显示时间
 ## 更新2
 增加了搜索结果的显示
@@ -42,5 +37,7 @@ jquery , animate.css , 原生js
    4.然后打开feifeiMusic.html就可以使用了
 ```
 
-[预览地址](https://mamba-working.github.io/feifei-Music/feifeiMusic.html)
+[预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
 
+![](https://ws1.sinaimg.cn/large/b17846e9gy1fpu0d9ru2xj228t1binpf.jpg)
+![](https://ws1.sinaimg.cn/large/b17846e9gy1fpu0htm3nzj228v1b1hdu.jpg)
