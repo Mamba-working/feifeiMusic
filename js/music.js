@@ -267,7 +267,7 @@ let Fm = {
     loadLyric() {
         let url ='';
         if(this.fromSearch){
-            url = "http://120.78.150.28:3000/lyric";
+            url = "http://localhost:4000/lyric";
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
         }
@@ -369,7 +369,7 @@ let search = {
     getData() {
         $.ajax({
             method: "GET",
-            url: "http://120.78.150.28:3000/search",
+            url: "http://localhost:4000/search",
             data: {
                 keywords: this.keyWords
             },
