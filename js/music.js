@@ -123,7 +123,9 @@ let footer = {
                 this.data = ret.channels;
                 this.setStyle()
             }
-        )
+        ).fail( () =>{
+            alert("??????,??")
+        })
     },
     
 
@@ -157,12 +159,32 @@ let Fm = {
                     $(".icon-play").removeClass("icon-play").addClass("icon-pause");
                 });
             } catch (e) {
-                console.log("加载失败")
+                alert("????????")
             }
 
         });
+        EventCenter.on("selectLyric",(e,data) =>{
+   
+            let num = 0;
+            let index = data.index;
+            let current = 0;
+            for(let i in this.lyricObj){
+                if( num === index){
+                    current = parseInt(i.slice(0,2))*60+parseInt(i.slice(3))
+                    this.music.currentTime = current;
+                    break
+                }else{
+                    num += 1;
+                }
+            }
+        })
+        $("section .lyrics>p").on("click", () =>{
+
+            $(".layout").fadeOut();
+            $(".detaillyric").fadeIn();
+        })
         $(".searchResult").on("click",".item",function(){
-            console.log()
+ 
            let index = Array.prototype.indexOf.call(document.querySelector(".searchResult").children,this)
            _this.song = _this.searchResult[index];
            _this.loadMusic();
@@ -266,12 +288,21 @@ let Fm = {
                             this.lyricObj[time] = str;
                         })
                     }
-
+                
 
                 })
-
+                $(".detaillyric>ul>li").remove()
+                let liTemp = `
+                 <li></li>
+                `
+                for(let li in this.lyricObj){
+                      let node = $(liTemp)
+                      node.text(this.lyricObj[li]);
+                      
+                      $(".detaillyric>ul").append(node)
+                }
             }).fail( () =>{
-                console.log("fail")
+                alert("?????????")
             })
     },
     updateStatus() {
@@ -282,18 +313,22 @@ let Fm = {
         $(".time").text(minu + ":" + seconds);
         let lyric = this.lyricObj[minu + ":" + seconds];
         if (lyric) {
-            $(".lyrics p").text(lyric).boomText()
+            $(".lyrics p").text(lyric).boomText();
+            let index =0;
+            for(let i in this.lyricObj){
+                 if((minu + ":" + seconds) === i){
+                    EventCenter.fire("update",{
+                        index:index
+                    })
+                    break;
+                 }else{
+                     index += 1;
+                 }
+            }
+            
         }
-        //     var timeStr = '0'+Math.floor(this.music.currentTime/60)+':'
-        //     + (Math.floor(this.music.currentTime)%60/100).toFixed(2).substr(2)
-        //   if(this.lyricObj && this.lyricObj[timeStr]){
-        //       console.log("ok")
-        // var styles = ['slideInUp','zoomIn','rollIn', 'rotateIn', 'flipInX','fadeIn', 'bounceIn','swing', 'pulse']
-        // var style = styles[Math.floor(Math.random()*styles.length)]
-        // $(".lyrics p").text(this.lyricObj[timeStr])
-        //  .boomText()
-
-        //   }
+       
+       
     },
     updateProgerss(x) {
         let width = x / $(".totalBar").width() * 100 + "%";
@@ -346,6 +381,33 @@ let search = {
 
     }
 }
+
+
+let lyricDetail = {
+    init(){
+       this.index = 0;
+       this.bind();
+    },
+    bind(){
+        let _this = this;
+        $(".detaillyric>ul").on("click","li",function(){
+           EventCenter.fire("selectLyric",{
+               index:$(this).index()
+           })
+        })
+        $(".detaillyric>.iconfont").on("click",function(){
+            $(".layout").fadeIn();
+            $(".detaillyric").fadeOut();
+        })
+        EventCenter.on("update", (e,data) =>{
+            let index = data.index;
+            $(".detaillyric>ul>li").css("color","peachpuff")
+            $(".detaillyric>ul>li").eq(index).css("color","white");
+
+        })
+    }
+}
 Fm.init()
 footer.init()
 search.init()
+lyricDetail.init()

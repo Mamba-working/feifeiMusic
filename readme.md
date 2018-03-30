@@ -29,6 +29,8 @@ jquery , animate.css , 原生js
 不过由于api的图片似乎出了问题,搜索的歌只使用了一张图片作为替代.由于两个api的歌词格式有区别,个别歌曲的歌词会显示时间
 ## 更新2
 增加了搜索结果的显示，修复了歌词问题
+## 更新3
+增加了歌词拖动，在点击歌词切换进度时出现了问题，因为每个歌都会有重复的歌词，这样高亮的歌词会每次都是第一次出现的那一句话，比如七里香中出现了两句你是我唯一想要的了解，只会高亮第一句。之后对逻辑进行了修改，使用时间进行判断就不会出错
 ## 使用说明
 ```
    1.git clone https://github.com/Mamba-working/feifei-Music.git
@@ -38,6 +40,6 @@ jquery , animate.css , 原生js
 ```
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
-
-![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpu0ma15uoj22741bv7wi.jpg)
-![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpu0ln41gej22921ayhdu.jpg)
+![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6pv5085j22a01bhkjl.jpg)
+![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6r1gh6aj227i1apb2b.jpg)
+![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6rkv8svj22a61exnpe.jpg)
