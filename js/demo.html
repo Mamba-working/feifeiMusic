@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+</head>
+<body>
+
+    <script>
+       
+       $.ajax({
+      url: "http://120.78.150.28:3000/search",
+      xhrFields: {
+        withCredentials: true
+      },
+    data:{
+        keywords:"周杰伦"
+    }
+    }).done( (e)=>{
+      console.log(e)
+    })
+  
+        </script>
+</body>
+</html>
