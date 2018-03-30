@@ -11,17 +11,17 @@
 
     <script>
        
-       $.ajax({
-      url: "http://120.78.150.28:3000/search",
-      xhrFields: {
-        withCredentials: true
-      },
-    data:{
-        keywords:"周杰伦"
-    }
-    }).done( (e)=>{
-      console.log(e)
-    })
+      $.ajax({
+          url:"http://120.78.150.28:3000/search",
+          data:{
+              keywords:"周杰伦",
+            //   proxy:"http://121.196.226.246:84"
+          }
+      }).done((e) =>{
+          console.log(e)
+      }).fail(() =>{
+          console.log("fail")
+      })
   
         </script>
 </body>
