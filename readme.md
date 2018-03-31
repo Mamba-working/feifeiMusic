@@ -35,10 +35,7 @@ jquery , animate.css , 原生js
 把接口放置在自己的服务器上，但由于是http，github无法使用，等改成https才能使用.(现在使用的接口为https，可以正常使用)
 ## 使用说明
 ```
-   1.git clone https://github.com/Mamba-working/feifei-Music.git
-   2.git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
-   3.参考api的文档使用npm install和set PORT=4000 && node app.js启动api
-   4.然后打开feifeiMusic.html就可以使用了
+现在接口直接在服务器上可以直接在 gihub pages使用了
 ```
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
