@@ -262,7 +262,7 @@ let Fm = {
 
     },
     setMusic() {
-        let img = this.song.picture || "https://ws1.sinaimg.cn/large/b17846e9gy1fptphrxmt5j211c0qot9u.jpg";
+        let img = this.song.picture || this.song.album.picUrl;
         this.music.src = this.song.url || ("http://music.163.com/song/media/outer/url?id="+this.song.id+".mp3");
         $(".background").css("background-image", "url" + '(' + img + ')');
         $("main section h1").text(this.song.title || this.song.name);
@@ -294,7 +294,7 @@ let Fm = {
                             this.lyricObj[time] = str;
                         })
                     }
-                
+               
 
                 })
                 $(".detaillyric>ul>li").remove()
