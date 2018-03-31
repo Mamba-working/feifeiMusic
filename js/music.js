@@ -136,6 +136,7 @@ let Fm = {
 
         this.music = new Audio();
         this.music.autoplay = true;
+        this.music.volume = 0.5
         this.fromSearch = false;
         this.bind()
     },
@@ -177,6 +178,11 @@ let Fm = {
                     num += 1;
                 }
             }
+        })
+        $("section .vbar").on("click", function(e){
+              _this.music.volume = e.offsetX / $("section .vbar").width()
+              $("section .vbar .currentVbar").css("width",e.offsetX / $("section .vbar").width()*100+"%");
+
         })
         $("section .lyrics>p").on("click", () =>{
 

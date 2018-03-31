@@ -128,8 +128,9 @@ section>.search{
     font-size: 2vh;
     /* position: absolute;
     right: 5vh; */
-    margin-left: 55%;
+    float: right;
     position: relative;
+  
 }
 section>.search>input{
     padding: 8px;
@@ -139,7 +140,7 @@ section>.search>input{
 }
 section>.search>.icon-search{
     color: #2e6eec;
-    padding: 7px;
+    padding: 8px;
     border-radius: 50%;
     position: absolute;
     left: 0;
@@ -150,7 +151,7 @@ section>.search>.icon-menu{
     color: #2e6eec;
     position: absolute;
     right:0;
-    padding:7px;
+    padding:8px;
     cursor: pointer;
     top:0;
 }
@@ -246,8 +247,32 @@ section .author {
     font-size: 2vh;
     margin-top: 2vh;
     color: rgba(255, 255, 255, 0.6);
+    display: inline-block;
 }
-
+section .volume{
+    display: flex;
+    margin-top:2vh;
+    align-items: center
+}
+section .volume .icon-volume{
+    margin-left: 5vw;
+}
+section .volume .vbar{
+    width:5vw;
+    height: 4px;
+    background: rgb(230, 230, 232);
+    display: flex;
+    position: relative;
+    cursor: pointer;
+    
+}
+section .volume .vbar .currentVbar{
+    cursor: pointer;
+    background: #2e6eec;
+    width:50%;
+    display: inline-block;
+    transition: width 0.4s;
+}
 section .lyrics {
     font-size: 3vh;
     margin-top: 3vh;
