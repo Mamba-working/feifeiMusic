@@ -267,7 +267,7 @@ let Fm = {
     loadLyric() {
         let url ='';
         if(this.fromSearch){
-            url = "https://musicapi.leanapp.cn//lyric";
+            url = "https://musicapi.leanapp.cn/lyric";
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
         }
@@ -292,6 +292,7 @@ let Fm = {
 
                 })
                 $(".detaillyric>ul>li").remove()
+                console.log("remove")
                 let liTemp = `
                  <li></li>
                 `
@@ -369,10 +370,11 @@ let search = {
     getData() {
         $.ajax({
             method: "GET",
-            url: "https://musicapi.leanapp.cn//search",
+            url: "https://musicapi.leanapp.cn/search",
             data: {
                 keywords: this.keyWords
             },
+
         }).done((ret) => {
             EventCenter.fire("searchResult", {
                 data: ret.result.songs
