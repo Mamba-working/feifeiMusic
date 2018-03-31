@@ -267,7 +267,7 @@ let Fm = {
     loadLyric() {
         let url ='';
         if(this.fromSearch){
-            url = "http://musicapi.leanapp.cn/lyric";
+            url = "https://musicapi.leanapp.cn//lyric";
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
         }
@@ -369,7 +369,7 @@ let search = {
     getData() {
         $.ajax({
             method: "GET",
-            url: "http://musicapi.leanapp.cn/search",
+            url: "https://musicapi.leanapp.cn//search",
             data: {
                 keywords: this.keyWords
             },
