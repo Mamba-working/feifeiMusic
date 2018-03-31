@@ -10,6 +10,7 @@ body,
 .layout {
     height: 100%;
     overflow: hidden;
+    
 }
 
 a {
@@ -50,6 +51,18 @@ ul {
     width: 46vh;
     background-size: cover;
     background-position: center;
+    border-radius: 50%;
+    border:1px solid #ccc;
+    animation: 6s rotate linear infinite;
+    animation-play-state:paused
+}
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg)
+    }
 }
 aside {
     float: left;

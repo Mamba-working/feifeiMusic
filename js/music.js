@@ -147,7 +147,8 @@ let Fm = {
             $(".icon-play").removeClass("icon-play").addClass("icon-pause");
             this.fromSearch =true
             this.searchResult = res.data;
-            this.song = this.searchResult[0];
+            this.index = 0
+            this.song = this.searchResult[this.index];
             this.loadMusic();
             this.setResult();
         })
@@ -178,7 +179,8 @@ let Fm = {
                     num += 1;
                 }
             }
-        })
+        });
+
         $("section .vbar").on("click", function(e){
               _this.music.volume = e.offsetX / $("section .vbar").width()
               $("section .vbar .currentVbar").css("width",e.offsetX / $("section .vbar").width()*100+"%");
@@ -193,8 +195,9 @@ let Fm = {
  
            let index = Array.prototype.indexOf.call(document.querySelector(".searchResult").children,this)
            _this.song = _this.searchResult[index];
+           _this.index = index;
            _this.loadMusic();
-           _this.setResult();
+        //    _this.setResult();
         })
         $(".btn-play").on("click", function () {
             $(this).toggleClass("icon-play");
@@ -209,9 +212,18 @@ let Fm = {
         //      let with 
         //  })
         $(".btn-next").on("click", () => {
-            this.loadMusic(() => {
-                $(".icon-play").removeClass("icon-play").addClass("icon-pause");
-            })
+            $(".icon-play").removeClass("icon-play").addClass("icon-pause");
+            if(this.fromSearch){
+                if(this.index === this.searchResult.length){
+                   this.index = 0; 
+                }else{
+                    this.index += 1;
+                }    
+                this.song = this.searchResult[this.index];
+            }
+                this.loadMusic()
+            
+            
         })
         $(".btn-collect").on("click", function () {
             $(this).toggleClass("active");
@@ -219,12 +231,14 @@ let Fm = {
  
 
         this.music.addEventListener("play", () => {
+            $(".aside>figure").css("animation-play-state","running");
             clearInterval(this.clock)
             this.clock = setInterval(() => {
                 this.updateStatus()
             }, 1000)
         })
         this.music.addEventListener("pause", () => {
+            $(".aside>figure").css("animation-play-state","paused");
             clearInterval(this.clock)
         })
         this.music.addEventListener("ended", () => {
@@ -236,11 +250,11 @@ let Fm = {
             this.updateProgerss(e.offsetX)
         })
     },
-    loadMusic(callback) {
+    loadMusic() {
 
             if(this.fromSearch){
-                this.loadLyric()
-                this.setMusic()
+                this.loadLyric();
+                this.setMusic();
                 return 
             }
             $.ajax({
@@ -252,7 +266,6 @@ let Fm = {
                 }
             }).done((ret) => {
                 this.song = ret['song'][0];
-                callback()
                 this.setMusic()
                 this.loadLyric()
             }).fail(() => {
@@ -298,7 +311,6 @@ let Fm = {
 
                 })
                 $(".detaillyric>ul>li").remove()
-                console.log("remove")
                 let liTemp = `
                  <li></li>
                 `
