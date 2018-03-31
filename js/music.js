@@ -30,7 +30,7 @@ var EventCenter = {
 
 let footer = {
     init() {
-        this.$leftBtn = $(".icon-left");
+        this.$leftBtn = $(".icon-Left");
         this.$rightBtn = $(".icon-right");
         this.$ul = $(".box").find("ul");
         this.isEnd = false;
