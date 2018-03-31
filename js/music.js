@@ -242,9 +242,9 @@ let Fm = {
             clearInterval(this.clock)
         })
         this.music.addEventListener("ended", () => {
-            this.loadMusic(() => {
-                $(".icon-play").removeClass("icon-play").addClass("icon-pause");
-            })
+            this.index ++;
+            this.song = this.searchResult[this.index];
+            this.loadMusic();
         })
         $(".totalBar").on("click", (e) => {
             this.updateProgerss(e.offsetX)
