@@ -53,8 +53,8 @@ ul {
     background-position: center;
     border-radius: 50%;
     border:1px solid #ccc;
-    animation: 6s rotate linear infinite;
-    animation-play-state:paused
+    animation: 36s rotate linear infinite;
+    animation-play-state:paused;
 }
 @keyframes rotate {
     0% {
@@ -202,7 +202,7 @@ section>.search>.searchResult>.item{
    padding:10px;
    cursor: pointer;
    color: peachpuff;
-   transition: color 0.2s
+   transition: all 0.2s
 }
 section>.search>.searchResult>.item:hover{
     background: #ccc;
