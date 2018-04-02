@@ -168,25 +168,7 @@ section>.search>.icon-menu{
     cursor: pointer;
     top:0;
 }
-section>.search>.searchResult::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
 
-section>.search>.searchResult::-webkit-scrollbar
-{
-	width: 12px;
-	background-color: #F5F5F5;
-}
-
-section>.search>.searchResult::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #555;
-}
 section>.search>.searchResult{
     overflow-y: scroll;
     display: none;
@@ -365,6 +347,7 @@ footer .cover {
     width: 100vw;
     height: 100vh;
    position: relative;
+   align-items: center;
  
 }
 
@@ -382,7 +365,7 @@ footer .cover {
 }
 .detaillyric ul{
     overflow-y: scroll;
-    height: 100%;
+    height: 50%;
     display: inline-block;
 }
 .detaillyric ul>li{
@@ -400,21 +383,24 @@ footer .cover {
 	background-color: #ffff;
 }
 
-.detaillyric ul::-webkit-scrollbar
+
+
+*::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 0px rgba(0,0,0,0.3);
+	border-radius: 0px;
+	background-color: #ffff;
+}
+
+*::-webkit-scrollbar
 {
 	width: 0px;
 	background-color: #ffff;
 }
 
-.detaillyric ul::-webkit-scrollbar-thumb
+*::-webkit-scrollbar-thumb
 {
 	border-radius: 0px;
 	-webkit-box-shadow: inset 0 0 0px rgba(0,0,0,.3);
 	background-color: #555;
-}
-.detaillyric>figure{
-    float: left;
-    position: relative;
-    top:23vh;
-    margin-left: 2vw
 }

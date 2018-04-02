@@ -430,9 +430,10 @@ let lyricDetail = {
             let index = data.index;
             $(".detaillyric>ul>li").css("color","peachpuff")
             $(".detaillyric>ul>li").eq(index).css("color","white");
-            if(index > 8){
+            console.log(index)
+            if(index > 5){
                 $(".detaillyric>ul").animate({
-                    scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-8)}`
+                    scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-5)}`
                 },1000)
             }
             
