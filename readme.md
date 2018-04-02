@@ -34,12 +34,15 @@ jquery , animate.css , 原生js
 ## 更新4
 把接口放置在自己的服务器上，但由于是http，github无法使用，等改成https才能使用.(现在使用的接口为https，可以正常使用)
 修复了图片问题
+## 更新5
+歌词更新高亮会滚动
 ## 使用说明
 ```
 现在接口直接在服务器上可以直接在 gihub pages使用了
 ```
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
+
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6pv5085j22a01bhkjl.jpg)
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6r1gh6aj227i1apb2b.jpg)
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6rkv8svj22a61exnpe.jpg)
