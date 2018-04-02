@@ -429,6 +429,12 @@ let lyricDetail = {
             let index = data.index;
             $(".detaillyric>ul>li").css("color","peachpuff")
             $(".detaillyric>ul>li").eq(index).css("color","white");
+            if(index > 8){
+                $(".detaillyric>ul").animate({
+                    scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-8)}`
+                },1000)
+            }
+            
 
         })
     }
