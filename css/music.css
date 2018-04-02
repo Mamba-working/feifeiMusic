@@ -383,7 +383,7 @@ footer .cover {
 .detaillyric ul{
     overflow-y: scroll;
     height: 100%;
-    float: left;
+    display: inline-block;
 }
 .detaillyric ul>li{
     margin-bottom: 3vh;
