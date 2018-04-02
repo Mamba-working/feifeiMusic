@@ -190,6 +190,7 @@ let Fm = {
 
             $(".layout").fadeOut();
             $(".detaillyric").fadeIn();
+            $(".detaillyric").css("display","flex")
         })
         $(".searchResult").on("click",".item",function(){
  
