@@ -231,14 +231,14 @@ let Fm = {
  
 
         this.music.addEventListener("play", () => {
-            $(".aside>figure").css("animation-play-state","running");
+            $("figure").css("animation-play-state","running");
             clearInterval(this.clock)
             this.clock = setInterval(() => {
                 this.updateStatus()
             }, 1000)
         })
         this.music.addEventListener("pause", () => {
-            $(".aside>figure").css("animation-play-state","paused");
+            $("figure").css("animation-play-state","paused");
             clearInterval(this.clock)
         })
         this.music.addEventListener("ended", () => {
@@ -287,7 +287,7 @@ let Fm = {
         $("main section>.cat").fadeOut("slow",()=>{
             $("main section>.cat").text(this.channel_name || this.song.album.name).fadeIn("slow");
         })
-        $(".aside>figure").css("background-image", "url" + '(' + img + ')')
+        $("figure").css("background-image", "url" + '(' + img + ')')
     },
     loadLyric() {
         let url ='';
@@ -324,7 +324,7 @@ let Fm = {
                       let node = $(liTemp)
                       node.text(this.lyricObj[li]);
                       
-                      $(".detaillyric>ul").append(node)
+                      $(".detaillyric ul").append(node)
                 }
             }).fail( () =>{
                 alert("?????????")
