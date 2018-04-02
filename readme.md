@@ -42,6 +42,7 @@ jquery , animate.css , 原生js
 ```
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
+
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6pv5085j22a01bhkjl.jpg)
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6r1gh6aj227i1apb2b.jpg)
 ![](https://ws1.sinaimg.cn/mw690/b17846e9gy1fpv6rkv8svj22a61exnpe.jpg)
