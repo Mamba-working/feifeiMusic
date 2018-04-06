@@ -124,7 +124,7 @@ let footer = {
                 this.setStyle()
             }
         ).fail( () =>{
-            alert("??????,??")
+            alert("sendDta fail")
         })
     },
     
@@ -161,7 +161,7 @@ let Fm = {
                     $(".icon-play").removeClass("icon-play").addClass("icon-pause");
                 });
             } catch (e) {
-                alert("????????")
+                alert("load fail")
             }
 
         });
@@ -327,8 +327,8 @@ let Fm = {
                       
                       $(".detaillyric ul").append(node)
                 }
-            }).fail( () =>{
-                alert("?????????")
+            }).fail( (e) =>{
+                console.log(e)
             })
     },
     updateStatus() {
@@ -383,9 +383,16 @@ let search = {
     },
     bind() {
         $(".search>.icon-search").on("click", () => {
+            console.log("ok")
             this.keyWords = $(".search>input").val();
             $(".search>.searchResult>.item").remove()
             this.getData()
+        })
+        $(".search>input").on("keyup", (e) => {
+            if(e.keyCode === 13){
+                $(".search>.icon-search").click();
+            }
+            
         })
         $(".search>.icon-menu").on("click", function(){
             $(this).siblings(".searchResult").slideToggle("slow")
