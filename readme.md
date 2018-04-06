@@ -43,6 +43,8 @@ jquery , animate.css , 原生js
 ### 使用说明
 ```
 现在接口直接在服务器上可以直接在 gihub pages使用了
+4.6
+   歌词接口出现问题，等待修复
 ```
 
 [预览地址](https://mamba-working.github.io/feifeiMusic/feifeiMusic.html)
