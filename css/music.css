@@ -193,6 +193,7 @@ section>.search>.searchResult>.item:hover{
 section>h1 {
     font-size: 6vh;
     margin-top: 2vh;
+    white-space: nowrap;
 }
 
 section>.detail {
@@ -275,6 +276,9 @@ section .lyrics {
 }
 section .lyrics p{
     cursor: pointer;
+    height: 80px;
+    display: flex;
+    align-items: center;
 }
 
 footer .iconfont {
@@ -374,6 +378,7 @@ footer .cover {
     width:auto;
     user-select: none;
     padding: 0 15vw;
+    white-space: nowrap;
 }
 
 .detaillyric ul::-webkit-scrollbar-track

@@ -156,10 +156,12 @@ let Fm = {
             this.fromSearch = false;
             this.channel_id = channelObj.channel_id;
             this.channel_name = channelObj.channel_name;
+            $(".searchResult").children().remove();
             try {
                 this.loadMusic(function (url) {
                     $(".icon-play").removeClass("icon-play").addClass("icon-pause");
                 });
+                $(".searchResult")
             } catch (e) {
                 alert("load fail")
             }
@@ -232,7 +234,7 @@ let Fm = {
  
 
         this.music.addEventListener("play", () => {
-            
+            $(".icon-play").removeClass("icon-play").addClass("icon-pause");
             $("figure").css("animation-play-state","running");
             clearInterval(this.clock)
             this.clock = setInterval(() => {
@@ -245,7 +247,10 @@ let Fm = {
         })
         this.music.addEventListener("ended", () => {
             this.index ++;
-            this.song = this.searchResult[this.index];
+            if(this.fromSearch){
+                this.song = this.searchResult[this.index];
+            }
+           
             this.loadMusic();
         })
         $(".totalBar").on("click", (e) => {
@@ -277,6 +282,7 @@ let Fm = {
 
     },
     setMusic() {
+    try{
         let img = this.song.picture || this.song.album.picUrl;
         this.music.src = this.song.url || ("http://music.163.com/song/media/outer/url?id="+this.song.id+".mp3");
         $(".background").css("background-image", "url" + '(' + img + ')');
@@ -290,6 +296,10 @@ let Fm = {
             $("main section>.cat").text(this.channel_name || this.song.album.name).fadeIn("slow");
         })
         $("figure").css("background-image", "url" + '(' + img + ')')
+    }catch(e){
+        console.log("接口出现问题")
+    }
+     
     },
     loadLyric() {
         let url ='';
@@ -307,9 +317,8 @@ let Fm = {
                 this.lyric = ret.lyric || ret.lrc.lyric  ;
                 this.lyricObj = {}
                 this.lyric.split("\n").forEach((line) => {
-                    let template = line.match(/\[\d{2}:\d{2}\.\d{2,4}\]/g)
                     let times = line.match(/\d{2}:\d{2}/g);
-                    let str = line.replace(template, '');
+                    let str = line.replace(/\[\d{2}:\d{2}\.\d{2,4}\]/g, '');
                     if (Array.isArray(times)) {
                         times.forEach((time) => {
                             if(str !== ""){
@@ -414,6 +423,7 @@ let search = {
        
     },
     getData() {
+        console.log("getData")
         $.ajax({
             method: "GET",
             url: "https://musicapi.leanapp.cn/search",
@@ -455,7 +465,7 @@ let lyricDetail = {
             $(".detaillyric>ul>li").eq(index).css("color","white");
             if(index > 5){
                 $(".detaillyric>ul").animate({
-                    scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-5)}`
+                    scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-4)}`
                 },1000)
             }
             
