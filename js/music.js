@@ -201,17 +201,17 @@ let Fm = {
         //    _this.setResult();
         })
         $(".btn-play").on("click", function () {
-            $(this).toggleClass("icon-play");
-            $(this).toggleClass("icon-pause");
-            if (_this.music.paused) {
-                _this.music.play()
-            } else {
-                _this.music.pause()
+            if(_this.song){
+                $(this).toggleClass("icon-play");
+                $(this).toggleClass("icon-pause");
+                if (_this.music.paused) {
+                    _this.music.play()
+                } else {
+                    _this.music.pause()
+                }
             }
+            
         })
-        //  this.music.addEventListener("timeupdate",() =>{
-        //      let with 
-        //  })
         $(".btn-next").on("click", () => {
             $(".icon-play").removeClass("icon-play").addClass("icon-pause");
             if(this.fromSearch){
@@ -340,12 +340,13 @@ let Fm = {
             })
     },
     updateStatus() {
-        if(!this.fail){
+       
             let width = (this.music.currentTime / this.music.duration) * 100 + "%";
             let minu = ('' + Math.floor(this.music.currentTime / 60)).length === 2 ? Math.floor(this.music.currentTime / 60) + '' : "0" + Math.floor(this.music.currentTime / 60)
             let seconds = ('' + Math.floor(this.music.currentTime % 60)).length === 2 ? Math.floor(this.music.currentTime % 60) + '' : "0" + Math.floor(this.music.currentTime % 60)
             $(".currentBar").css("width", width);
             $(".time").text(minu + ":" + seconds);
+            if(!this.fail){
             let lyric = this.lyricObj[minu + ":" + seconds];
             if (lyric) {
                 $(".lyrics p").text(lyric).boomText();
@@ -363,6 +364,7 @@ let Fm = {
                 
             }
         }
+        
             
         
        
