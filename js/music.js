@@ -343,7 +343,7 @@ let Fm = {
             }).fail( (e) =>{
                 this.fail = true;
                 $(".detaillyric>ul>li").remove()
-                $(".lyrics p").text("歌词借口暂时挂了0-0");
+                $(".lyrics p").text("歌词接口暂时挂了0-0");
                 $(".detaillyric ul").append($("<li>歌词借口暂时挂了</li>"))
 
             })
