@@ -232,6 +232,7 @@ let Fm = {
  
 
         this.music.addEventListener("play", () => {
+            
             $("figure").css("animation-play-state","running");
             clearInterval(this.clock)
             this.clock = setInterval(() => {
@@ -302,16 +303,19 @@ let Fm = {
                 id:this.song.id
             })
             .done((ret) => {
+                this.fail = false;
                 this.lyric = ret.lyric || ret.lrc.lyric  ;
                 this.lyricObj = {}
                 this.lyric.split("\n").forEach((line) => {
                     let template = line.match(/\[\d{2}:\d{2}\.\d{2,4}\]/g)
                     let times = line.match(/\d{2}:\d{2}/g);
-                    //  let str = line.replace(/\[.*\] /g,'');
                     let str = line.replace(template, '');
                     if (Array.isArray(times)) {
                         times.forEach((time) => {
-                            this.lyricObj[time] = str;
+                            if(str !== ""){
+                                this.lyricObj[time] = str;
+                            }
+                            
                         })
                     }
                
@@ -328,31 +332,40 @@ let Fm = {
                       $(".detaillyric ul").append(node)
                 }
             }).fail( (e) =>{
-                console.log(e)
+                this.fail = true;
+                $(".detaillyric>ul>li").remove()
+                $(".lyrics p").text("歌词借口暂时挂了0-0");
+                $(".detaillyric ul").append($("<li>歌词借口暂时挂了</li>"))
+
             })
     },
     updateStatus() {
-        let width = (this.music.currentTime / this.music.duration) * 100 + "%";
-        let minu = ('' + Math.floor(this.music.currentTime / 60)).length === 2 ? Math.floor(this.music.currentTime / 60) + '' : "0" + Math.floor(this.music.currentTime / 60)
-        let seconds = ('' + Math.floor(this.music.currentTime % 60)).length === 2 ? Math.floor(this.music.currentTime % 60) + '' : "0" + Math.floor(this.music.currentTime % 60)
-        $(".currentBar").css("width", width);
-        $(".time").text(minu + ":" + seconds);
-        let lyric = this.lyricObj[minu + ":" + seconds];
-        if (lyric) {
-            $(".lyrics p").text(lyric).boomText();
-            let index =0;
-            for(let i in this.lyricObj){
-                 if((minu + ":" + seconds) === i){
-                    EventCenter.fire("update",{
-                        index:index
-                    })
-                    break;
-                 }else{
-                     index += 1;
-                 }
+        if(!this.fail){
+            let width = (this.music.currentTime / this.music.duration) * 100 + "%";
+            let minu = ('' + Math.floor(this.music.currentTime / 60)).length === 2 ? Math.floor(this.music.currentTime / 60) + '' : "0" + Math.floor(this.music.currentTime / 60)
+            let seconds = ('' + Math.floor(this.music.currentTime % 60)).length === 2 ? Math.floor(this.music.currentTime % 60) + '' : "0" + Math.floor(this.music.currentTime % 60)
+            $(".currentBar").css("width", width);
+            $(".time").text(minu + ":" + seconds);
+            let lyric = this.lyricObj[minu + ":" + seconds];
+            if (lyric) {
+                $(".lyrics p").text(lyric).boomText();
+                let index =0;
+                for(let i in this.lyricObj){
+                     if((minu + ":" + seconds) === i){
+                        EventCenter.fire("update",{
+                            index:index
+                        })
+                        break;
+                     }else{
+                         index += 1;
+                     }
+                }
+                
             }
-            
         }
+            
+        
+       
        
        
     },
@@ -383,7 +396,6 @@ let search = {
     },
     bind() {
         $(".search>.icon-search").on("click", () => {
-            console.log("ok")
             this.keyWords = $(".search>input").val();
             $(".search>.searchResult>.item").remove()
             this.getData()
@@ -411,6 +423,8 @@ let search = {
             EventCenter.fire("searchResult", {
                 data: ret.result.songs
             })
+        }).fail( (e) =>{
+            alert("接口出现问题")
         })
 
     }
@@ -437,7 +451,6 @@ let lyricDetail = {
             let index = data.index;
             $(".detaillyric>ul>li").css("color","peachpuff")
             $(".detaillyric>ul>li").eq(index).css("color","white");
-            console.log(index)
             if(index > 5){
                 $(".detaillyric>ul").animate({
                     scrollTop:`${$(".detaillyric>ul>li").outerHeight(true)*(index-5)}`
