@@ -212,6 +212,8 @@ let Fm = {
            _this.index = index;
            if(index !== 0){
                _this.mock = false;
+           }else{
+               _this.mock = true;
            }
            $.ajax({
             url:"https://musicapimyself.leanapp.cn/song/detail",
