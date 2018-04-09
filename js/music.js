@@ -362,7 +362,7 @@ let Fm = {
             }).fail( (e) =>{
                 this.fail = true;
                 $(".detaillyric>ul>li").remove()
-                $(".lyrics p").text("接口暂时挂了0-0");
+                $(".lyrics p").text("搜索的歌词功能由于接口问题用不了，歌单的还可以");
                 $(".detaillyric ul").append($("<li>接口暂时挂了</li>"))
 
             })
