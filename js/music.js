@@ -144,9 +144,11 @@ let Fm = {
 
         let _this = this;
         EventCenter.on("searchResult", (e, res) => {
+            console.log(res)
             $(".icon-play").removeClass("icon-play").addClass("icon-pause");
             this.fromSearch =true
             this.searchResult = res.data;
+            this.mock = res.mock;
             this.index = 0
             this.song = this.searchResult[this.index];
             $.ajax({
@@ -208,6 +210,9 @@ let Fm = {
            let index = Array.prototype.indexOf.call(document.querySelector(".searchResult").children,this)
            _this.song = _this.searchResult[index];
            _this.index = index;
+           if(index !== 0){
+               _this.mock = false;
+           }
            $.ajax({
             url:"https://musicapimyself.leanapp.cn/song/detail",
             data:{
@@ -302,7 +307,6 @@ let Fm = {
     setMusic() {
     try{
         let img = this.song.picture || this.song.album.picUrl || this.picTemp;
-        console.log()
         this.music.src = this.song.url || ("http://music.163.com/song/media/outer/url?id="+this.song.id+".mp3");
         $(".background").css("background-image", "url" + '(' + img + ')');
         $("main section h1").fadeOut("slow", () =>{
@@ -323,7 +327,12 @@ let Fm = {
     loadLyric() {
         let url ='';
         if(this.fromSearch){
-            url = "https://musicapimyself.leanapp.cn/lyric";
+            if(this.mock){
+                url = "https://easy-mock.com/mock/5acb66ea942d29514de2a31a/getLyric";
+                console.log("ok")
+            }else{
+                url = "https://musicapimyself.leanapp.cn/lyric";
+            }
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
         }
@@ -333,7 +342,7 @@ let Fm = {
             })
             .done((ret) => {
                 this.fail = false;
-                this.lyric = ret.lyric || ret.lrc.lyric  ;
+                this.lyric = ret.lyric || ret.data.lyric ;
                 this.lyricObj = {}
                 this.lyric.split("\n").forEach((line) => {
                     let times = line.match(/\d{2}:\d{2}/g);
@@ -422,11 +431,17 @@ let Fm = {
 
 let search = {
     init() {
+        this.mock = false;
         this.bind()
     },
     bind() {
         $(".search>.icon-search").on("click", () => {
             this.keyWords = $(".search>input").val();
+            if(this.keyWords ==="遥远的歌"){
+                this.mock = true;
+            }else{
+                this.mock =false;
+            }
             $(".search>.searchResult>.item").remove()
             this.getData()
         })
@@ -447,12 +462,13 @@ let search = {
             method: "GET",
             url: "https://musicapimyself.leanapp.cn/search",
             data: {
-                keywords: this.keyWords
+                keywords: this.keyWords,
             },
 
         }).done((ret) => {
             EventCenter.fire("searchResult", {
-                data: ret.result.songs
+                data: ret.result.songs,
+                mock:this.mock
             })
         }).fail( (e) =>{
             alert("接口出现问题")

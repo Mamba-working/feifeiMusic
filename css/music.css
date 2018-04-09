@@ -98,6 +98,7 @@ main {
     margin: 0 auto;
     padding-top: 12vh;
     height: calc(100% - 24vh);
+    min-width: 1000px;
 }
 
 main::after {
