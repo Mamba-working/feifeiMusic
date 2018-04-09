@@ -149,8 +149,17 @@ let Fm = {
             this.searchResult = res.data;
             this.index = 0
             this.song = this.searchResult[this.index];
-            this.loadMusic();
-            this.setResult();
+            $.ajax({
+               url:"https://musicapimyself.leanapp.cn/song/detail",
+               data:{
+                   ids:this.searchResult[this.index].id 
+               }
+            }).done((ret) =>{
+               this.picTemp = ret.songs[0].al.picUrl;
+               this.loadMusic();
+               this.setResult();
+            })
+           
         })
         EventCenter.on("select_album", (e, channelObj) => {
             this.fromSearch = false;
@@ -199,7 +208,16 @@ let Fm = {
            let index = Array.prototype.indexOf.call(document.querySelector(".searchResult").children,this)
            _this.song = _this.searchResult[index];
            _this.index = index;
-           _this.loadMusic();
+           $.ajax({
+            url:"https://musicapimyself.leanapp.cn/song/detail",
+            data:{
+                ids:_this.searchResult[_this.index].id 
+            }
+         }).done((ret) =>{
+            _this.picTemp = ret.songs[0].al.picUrl;
+            _this.loadMusic();
+            _this.setResult();
+         })
         //    _this.setResult();
         })
         $(".btn-play").on("click", function () {
@@ -283,7 +301,8 @@ let Fm = {
     },
     setMusic() {
     try{
-        let img = this.song.picture || this.song.album.picUrl;
+        let img = this.song.picture || this.song.album.picUrl || this.picTemp;
+        console.log()
         this.music.src = this.song.url || ("http://music.163.com/song/media/outer/url?id="+this.song.id+".mp3");
         $(".background").css("background-image", "url" + '(' + img + ')');
         $("main section h1").fadeOut("slow", () =>{
@@ -304,7 +323,7 @@ let Fm = {
     loadLyric() {
         let url ='';
         if(this.fromSearch){
-            url = "https://musicapi.leanapp.cn/lyric";
+            url = "https://musicapimyself.leanapp.cn/lyric";
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
         }
@@ -426,7 +445,7 @@ let search = {
         console.log("getData")
         $.ajax({
             method: "GET",
-            url: "https://musicapi.leanapp.cn/search",
+            url: "https://musicapimyself.leanapp.cn/search",
             data: {
                 keywords: this.keyWords
             },
@@ -439,7 +458,8 @@ let search = {
             alert("接口出现问题")
         })
 
-    }
+    },
+    
 }
 
 
