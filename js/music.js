@@ -343,8 +343,9 @@ let Fm = {
                 id:this.song.id
             })
             .done((ret) => {
+                console.log(ret)
                 this.fail = false;
-                this.lyric = ret.lyric || ret.data.lyric ;
+                this.lyric = ret.lyric || ret.lrc.lyric  ;
                 this.lyricObj = {}
                 this.lyric.split("\n").forEach((line) => {
                     let times = line.match(/\d{2}:\d{2}/g);
