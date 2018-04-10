@@ -283,6 +283,7 @@ let Fm = {
         })
         this.music.addEventListener("ended", () => {
             this.index ++;
+            this.mock = false;
             if(this.fromSearch){
                 this.song = this.searchResult[this.index];
             }
@@ -350,12 +351,14 @@ let Fm = {
         if(this.fromSearch){
             if(this.mock){
                 url = "https://easy-mock.com/mock/5acb66ea942d29514de2a31a/getLyric";
-                console.log("ok")
+                console.log("mock")
             }else{
                 url = "https://musicapimyself.leanapp.cn/lyric";
+                console.log("no mock")
             }
         }else{
             url = "https://jirenguapi.applinzi.com/fm/getLyric.php";
+            console.log("album")
         }
         $.getJSON(url, {
                 sid: this.song.sid ,
