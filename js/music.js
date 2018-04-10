@@ -535,7 +535,11 @@ let lyricDetail = {
         })
     }
 }
-Fm.init()
-footer.init()
-search.init()
-lyricDetail.init()
+try{
+    Fm.init()
+    footer.init()
+    search.init()
+    lyricDetail.init()
+}catch(e){
+    console.log("接口问题，重试")
+}
