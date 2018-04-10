@@ -193,7 +193,9 @@ let Fm = {
                 }
             }
         });
-
+        $(window).on("click", (e) =>{
+            $(".searchResult").slideUp("slow");
+        })
         $("section .vbar").on("click", function(e){
               _this.music.volume = e.offsetX / $("section .vbar").width()
               $("section .vbar .currentVbar").css("width",e.offsetX / $("section .vbar").width()*100+"%");
@@ -454,7 +456,11 @@ let search = {
             }
             
         })
-        $(".search>.icon-menu").on("click", function(){
+        $(".search").on("click",(e) =>{
+              e.stopPropagation();
+              
+        })
+        $(".search>.icon-menu").on("click", function(e){
             $(this).siblings(".searchResult").slideToggle("slow")
         })
        
