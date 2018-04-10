@@ -365,7 +365,6 @@ let Fm = {
                 id:this.song.id
             })
             .done((ret) => {
-                console.log(ret)
                 this.fail = false;
                 this.lyric = ret.lyric || ret.lrc.lyric  ;
                 this.lyricObj = {}
