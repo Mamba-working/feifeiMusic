@@ -144,7 +144,6 @@ let Fm = {
 
         let _this = this;
         EventCenter.on("searchResult", (e, res) => {
-            console.log(res)
             $(".icon-play").removeClass("icon-play").addClass("icon-pause");
             this.fromSearch =true
             this.searchResult = res.data;
@@ -251,6 +250,16 @@ let Fm = {
                 }    
                 this.song = this.searchResult[this.index];
             }
+            $.ajax({
+                url:"https://musicapimyself.leanapp.cn/song/detail",
+                data:{
+                    ids:this.searchResult[this.index].id 
+                }
+             }).done((ret) =>{
+                this.picTemp = ret.songs[0].al.picUrl;
+                this.loadMusic();
+                this.setResult();
+             })
                 this.loadMusic()
             
             
