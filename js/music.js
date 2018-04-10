@@ -286,8 +286,16 @@ let Fm = {
             if(this.fromSearch){
                 this.song = this.searchResult[this.index];
             }
-           
-            this.loadMusic();
+            $.ajax({
+                url:"https://musicapimyself.leanapp.cn/song/detail",
+                data:{
+                    ids:this.searchResult[this.index].id 
+                }
+             }).done((ret) =>{
+                this.picTemp = ret.songs[0].al.picUrl;
+                this.loadMusic();
+                this.setResult();
+             })
         })
         $(".totalBar").on("click", (e) => {
             this.updateProgerss(e.offsetX)
